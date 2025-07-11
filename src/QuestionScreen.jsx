@@ -36,9 +36,16 @@ export default function QuestionScreen() {
 
   useEffect(() => {
     const loadData = async () => {
-      const res = await import(`./data/${decodeURIComponent(file)}`);
-      setFileData(res.default);
-      setQuestions(res.default.questionList || []);
+      try {
+        const res = await fetch(
+          `${import.meta.env.BASE_URL}data/${decodeURIComponent(file)}`
+        );
+        const json = await res.json();
+        setFileData(json);
+        setQuestions(json.questionList || []);
+      } catch (err) {
+        console.error("Error loading file:", err);
+      }
     };
     loadData();
   }, [file]);
@@ -53,6 +60,7 @@ export default function QuestionScreen() {
   };
 
   const selectedQuestion = questions[selectedQuestionIndex];
+  if (!fileData) return <div>Loading...</div>;
 
   return (
     <div className="flex h-screen font-sans">
