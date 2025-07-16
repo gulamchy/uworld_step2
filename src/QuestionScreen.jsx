@@ -1,4 +1,5 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faAddressBook, faContactBook } from '@fortawesome/free-regular-svg-icons'
@@ -25,6 +26,8 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import { IoCheckmarkOutline } from "react-icons/io5";
 import { IoCloseOutline } from "react-icons/io5";
 import { TbExternalLink } from "react-icons/tb";
+import NoteSearchModal from "./NoteSearchModal.jsx";
+import { GrNotes } from "react-icons/gr";
 
 export default function QuestionScreen() {
   const { file } = useParams();
@@ -33,6 +36,7 @@ export default function QuestionScreen() {
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
   const [showAnswers, setShowAnswers] = useState(false);
   const [tempSelectedAnswer, setTempSelectedAnswer] = useState(null);
+  const [showNoteModal, setShowNoteModal] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -137,10 +141,20 @@ export default function QuestionScreen() {
               </div>
 
               <div className="flex items-center justify-end gap-1 pr-[4px]">
+                {/* <div >
+                  <button onClick={() => setShowNoteModal(true)}
+                    className="flex flex-col items-center justify-center mx-[4px] py-[1px] px-[3px] cursor-pointer"
+                    >
+                    <GrNotes className="w-4 h-6 text-white" />
+                    <span className="text-xs text-white">Notes</span>
+                  </button>
+                </div> */}
+
                 <div className="flex flex-col items-center justify-center mx-[4px] py-[1px] px-[3px]">
                   <RxEnterFullScreen className="w-6 h-6 text-white" />
                   <span className="text-xs text-white">Full Screen</span>
                 </div>
+
                 <div className="flex flex-col items-center justify-center mx-[4px] py-[1px] px-[3px]">
                   <FaRegQuestionCircle className="w-6 h-6 text-white" />
                   <span className="text-xs text-white">Tutorial</span>
@@ -149,10 +163,15 @@ export default function QuestionScreen() {
                   <LabsIcon className="w-8 h-6 text-white" />
                   <span className="text-xs text-white">Lab Values</span>
                 </div>
-                <div className="flex flex-col items-center justify-center mx-[4px] py-[1px] px-[3px]">
+
+                <button
+                  onClick={() => setShowNoteModal(true)}
+                  className="flex flex-col items-center justify-center mx-[4px] py-[1px] px-[3px] cursor-pointer"
+                >
                   <WriteIcon className="w-8 h-6 " />
                   <span className="text-xs text-white">Notes</span>
-                </div>
+                </button>
+
                 <div className="flex flex-col items-center justify-center mx-[4px] py-[1px] px-[3px]">
                   <CalcIcon className="w-8 h-6 text-white" />
                   <span className="text-xs text-white">Calculator</span>
@@ -387,10 +406,13 @@ export default function QuestionScreen() {
               <FaRegNewspaper className="w-6 h-6 text-white" />
               <span className="text-[11.5px] text-white">Medical Library</span>
             </div>
-            <div className="flex flex-col items-center justify-center mx-[4px] py-[1px] px-[3px]">
+            <button
+              onClick={() => setShowNoteModal(true)}
+              className="flex flex-col items-center justify-center mx-[4px] py-[1px] px-[3px] cursor-pointer"
+            >
               <LuBookText className="w-6 h-6 text-white" />
               <span className="text-[11.5px] text-white">My Notebook</span>
-            </div>
+            </button>
             <div className="flex flex-col items-center justify-center mx-[4px] py-[1px] px-[3px]">
               <HiOutlineBolt className="w-6 h-6 text-white" />
               <span className="text-[11.5px] text-white">Flaskcards</span>
@@ -406,6 +428,9 @@ export default function QuestionScreen() {
           </div>
         </div>
       </div>
+      {showNoteModal && (
+        <NoteSearchModal onClose={() => setShowNoteModal(false)} />
+      )}
     </div>
   );
 }
