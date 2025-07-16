@@ -48,6 +48,8 @@ body {
 }
 .explanation-html a {
   color: blue;
+  pointer-events: none;
+  cursor: default;
 }
 
 .explanation-html img {
@@ -111,6 +113,8 @@ body {
 }
 .notes-html a {
   color: blue;
+  pointer-events: none;
+  cursor: default;
 }
 
 .notes-html img {
