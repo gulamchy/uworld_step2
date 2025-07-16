@@ -123,7 +123,7 @@ export default function NoteSearchModal({ onClose }) {
 
   // Persisted position
   // const [position, setPosition] = useState({ x: 0, y: 0 });
-    const [position, setPosition] = useState({ x: window.innerWidth / 2 -450, y: window.innerHeight / 2 -350 });
+    const [position, setPosition] = useState({ x: window.innerWidth / 2 -450, y: window.innerHeight / 2 - 300 });
 
 
   useEffect(() => {
