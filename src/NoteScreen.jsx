@@ -282,6 +282,8 @@ export default function NotesViewer() {
 
   // Filter notes by search term
   const displayTitle = (n) => `${n.baseTitle || ""}${n.suffix || ""}`;
+  const hasPercentPrefix = (n) =>
+    /^\s*\d+(?:\.\d+)?%\s+/i.test(displayTitle(n));
 
   const filteredNotes = useMemo(() => {
     // const filtered = notes.filter((note) =>
@@ -441,8 +443,19 @@ export default function NotesViewer() {
                         />
                         <button
                           onClick={() => setSelectedIndex(note.originalIndex)}
+                          // className={`flex-1 text-left capitalize ${
+                          //   (note.suffix || "").toLowerCase() === "-super_important"
+                          //     ? "text-red-900"
+                          //     : (note.suffix || "").toLowerCase() ===
+                          //       "-duplicate"
+                          //     ? "text-gray-400"
+                          //     : ""
+                          // }`}
                           className={`flex-1 text-left capitalize ${
-                            (note.suffix || "").toLowerCase() === "-super_important"
+                            hasPercentPrefix(note)
+                              ? "text-red-600" // <-- percent-prefixed titles become red
+                              : (note.suffix || "").toLowerCase() ===
+                                "-super_important"
                               ? "text-red-900"
                               : (note.suffix || "").toLowerCase() ===
                                 "-duplicate"
